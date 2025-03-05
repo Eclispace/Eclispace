@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Космический сайт с GIF</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Контейнер для звезд -->
+    <div class="stars"></div>
+    <div class="falling-stars"></div>
+
+    <!-- Заголовок -->
+    <h1>Добро пожаловать в космос!</h1>
+
+    <!-- Ссылки для динамического контента -->
+    <div class="dynamic-links">
+        <a href="about.html">О проекте</a>
+        <a href="news.html">Новости</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="faq.html">FAQ</a>
+    </div>
+
+    <!-- Контейнер для динамически меняющегося контента -->
+    <div id="dynamicContent" class="content-container">
+        <p>Выберите ссылку для получения информации.</p>
+    </div>
+
+    <!-- Контейнер для гифок -->
+    <div class="content">
+        <div class="gif-container left">
+            <img src="https://cdn.dribbble.com/users/362219/screenshots/4827449/galaxygif.gif" alt="Космический GIF слева">
+        </div>
+
+        <div class="gif-container right">
+            <img src="https://www.deskmodder.de/blog/wp-content/uploads/2018/07/wallpaper.gif" alt="Космический GIF справа">
+        </div>
+    </div>
+
+    <!-- Кнопка для генерации числа -->
+    <div class="button-container">
+        <button id="generateBtn">Сгенерировать число</button>
+        <p id="numberDisplay">Число: </p>
+        <p id="factDisplay">Интересный факт: </p>
+    </div>
+
+    <!-- Кнопка для начала игры -->
+    <div class="game-button">
+        <button id="startGameBtn">Начать игру</button>
+    </div>
+
+    <div class="footer">
+        <p>© 2025, Космический проект.</p>
+    </div>
+
+    <!-- Скрипт для генерации числа -->
+    <script>
+        const facts = [
+            "Космическое пространство практически полностью пусто.",
+            "В космосе можно услышать только звук вибрации.",
+            "Луна на самом деле не является планетой, а спутником Земли.",
+            "На Юпитере есть Большое Красное Пятно, которое является штормом.",
+            "Скорость света составляет около 300,000 км/с.",
+            "В космосе все выглядит по-другому из-за отсутствия атмосферы.",
+            "Марс может когда-то стать вторым домом для человечества.",
+            "Солнечная система — это лишь маленькая часть нашей галактики.",
+            "Черные дыры могут поглощать даже свет.",
+            "Солнце — это звезда средней величины."
+        ];
+
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            let randomNumber = Math.floor(Math.random() * 21) + 1;
+            document.getElementById('numberDisplay').innerText = "Число: " + randomNumber;
+
+            let randomFact = facts[Math.floor(Math.random() * facts.length)];
+            document.getElementById('factDisplay').innerText = "Интересный факт: " + randomFact;
+        });
+
+        document.getElementById("startGameBtn").addEventListener("click", function() {
+            window.open("game.html", "_blank", "width=800,height=600");
+        });
+
+        function showContent(section) {
+            let content = {
+                about: `
+                    <h2>О проекте</h2>
+                    <p>Этот проект посвящен космосу! Мы исследуем все его аспекты, от планет до далеких звезд.</p>
+                    <p>Наши миссии включают в себя разработку космических технологий и распространение знаний о космосе.</p>
+                `,
+                news: `
+                    <h2>Новости</h2>
+                    <p>Сегодня мы запускаем новый проект по исследованию Марса.</p>
+                    <p>Также команда приступает к анализу данных, полученных от телескопа Hubble.</p>
+                `,
+                contacts: `
+                    <h2>Контакты</h2>
+                    <p>Для связи с нами отправьте письмо на адрес <strong>contact@spaceproject.com</strong>.</p>
+                    <p>Или позвоните по телефону: <strong>+7 (123) 456-78-90</strong>.</p>
+                `,
+                faq: `
+                    <h2>FAQ</h2>
+                    <p><strong>Вопрос:</strong> Можно ли посетить космос?</p>
+                    <p><strong>Ответ:</strong> Да, в ближайшие годы ожидаются коммерческие полеты в космос.</p>
+                    <p><strong>Вопрос:</strong> Как стать астронавтом?</p>
+                    <p><strong>Ответ:</strong> Для этого нужно пройти строгую подготовку и иметь опыт работы в области науки или инженерии.</p>
+                `
+            };
+
+            document.getElementById('dynamicContent').innerHTML = content[section];
+        }
+
+        function createStars() {
+            const starContainer = document.querySelector('.stars');
+            const numStars = 150;
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.top = `${Math.random() * 100}vh`;
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                starContainer.appendChild(star);
+            }
+        }
+
+        function createFallingStars() {
+            const starContainer = document.querySelector('.falling-stars');
+            const numFallingStars = 30;
+            for (let i = 0; i < numFallingStars; i++) {
+                const fallingStar = document.createElement('div');
+                fallingStar.classList.add('falling-star');
+                fallingStar.style.left = `${Math.random() * 100}vw`;
+                fallingStar.style.animationDelay = `${Math.random() * 5}s`;
+                starContainer.appendChild(fallingStar);
+            }
+        }
+
+        createStars();
+        createFallingStars();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О проекте</title>
+    <style>
+        /* Основной стиль страницы */
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: black;
+            color: #00FF00; /* Ярко-зеленый цвет, как на старых терминалах */
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Убираем прокрутку */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Высота экрана */
+            flex-direction: column;
+            text-align: center;
+        }
+
+        /* Стили для консоли */
+        #console {
+            width: 80%;
+            max-width: 900px;
+            height: 60%;
+            background-color: black;
+            color: #00FF00;
+            border: 2px solid #00FF00;
+            padding: 20px;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: scroll; /* Сделать прокрутку вертикальной */
+            box-sizing: border-box;
+            margin-bottom: 20px; /* Отступ снизу */
+            border-radius: 10px; /* Закругленные углы */
+            margin-top: 20px;
+        }
+
+        /* Ввод текста в консоль */
+        #input {
+            background-color: black;
+            color: #00FF00;
+            border: none;
+            width: 100%;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            outline: none;
+            margin-top: 10px;
+        }
+
+        #input:focus {
+            outline: none;
+        }
+
+        .line {
+            display: flex;
+        }
+
+        /* Мигающий курсор */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #00FF00;
+            animation: blink 0.4s step-start infinite; /* Уменьшена длительность */
+            margin-left: 5px;
+        }
+
+        /* Анимация мигающего курсора */
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Скрываем основной контент на старте */
+        .container {
+            display: none; /* Он будет скрыт, пока не завершится анимация */
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Эффект анимации включения */
+        .start-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            color: #00FF00;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 24px;
+            animation: startUp 6s steps(1, end) forwards; /* Увеличена продолжительность */
+        }
+
+        /* Анимация включения компьютера (эффект старта) */
+        @keyframes startUp {
+            0% {
+                content: "Initializing system...";
+                opacity: 1;
+            }
+            20% {
+                content: "Checking memory...";
+            }
+            40% {
+                content: "Loading kernel...";
+            }
+            60% {
+                content: "Scanning hardware...";
+            }
+            80% {
+                content: "Starting services...";
+            }
+            90% {
+                content: "System ready.";
+            }
+            100% {
+                content: "Press Enter to continue";
+                font-size: 28px;
+                text-decoration: underline;
+                opacity: 0; /* Убираем анимацию в конце */
+            }
+        }
+
+        /* Стили для бегущей строки с радужным эффектом */
+        .scrolling-text {
+            white-space: nowrap;
+            overflow: hidden;
+            box-sizing: border-box;
+            animation: scroll-text 10s linear infinite, rainbow 5s linear infinite;
+            font-weight: bold;
+        }
+
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes rainbow {
+            0% {
+                color: red;
+            }
+            14% {
+                color: orange;
+            }
+            28% {
+                color: yellow;
+            }
+            42% {
+                color: green;
+            }
+            57% {
+                color: blue;
+            }
+            71% {
+                color: indigo;
+            }
+            85% {
+                color: violet;
+            }
+            100% {
+                color: red;
+            }
+        }
+
+        /* Стили для ссылок */
+        a {
+            color: #00FF00;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #FFFF00; /* Желтый цвет при наведении */
+        }
+
+        /* Для заголовков */
+        h1, h2 {
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Стили для абзацев */
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* Ссылка для возврата на главную страницу */
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #00FF00;
+        }
+
+        .back-link:hover {
+            color: #FFFF00; /* Желтый цвет при наведении */
+            text-decoration: underline;
+        }
+
+        /* Стили для кастомной прокрутки консоли */
+        #console::-webkit-scrollbar {
+            width: 8px; /* Ширина полосы прокрутки */
+        }
+
+        #console::-webkit-scrollbar-track {
+            background: black; /* Цвет фона полосы прокрутки */
+        }
+
+        #console::-webkit-scrollbar-thumb {
+            background-color: #00FF00; /* Цвет ползунка */
+            border-radius: 10px; /* Закругленные углы */
+            border: 2px solid black; /* Граница ползунка */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Элемент для анимации включения -->
+    <div class="start-animation">
+        <p>Initializing system...<span class="cursor"></span></p>
+    </div>
+
+    <!-- Основной контент, который будет виден после окончания анимации -->
+    <div class="container">
+        <h1>О проекте</h1>
+
+        <!-- Бегущая строка -->
+        <div class="scrolling-text">
+            <p>Добро пожаловать на наш сайт!</p>
+        </div>
+
+        <h2>Цель проекта</h2>
+        <p>Мы стремимся объединить уникальную эстетику старых операционных систем с функциональностью современных веб-технологий. Этот проект — наше видение того, как может выглядеть будущий интернет.</p>
+
+        <h2>Наши контакты</h2>
+        <p>Для связи с нами используйте следующие ссылки:</p>
+        <ul>
+            <li><a href="mailto:contact@example.com">Email</a></li>
+            <li><a href="https://www.example.com">Вебсайт</a></li>
+        </ul>
+
+        <!-- Ссылка для возврата на главную страницу -->
+        <a class="back-link" href="index.html">Вернуться на главную страницу</a>
+    </div>
+
+    <!-- Консоль -->
+    <div id="console">
+        <div class="line">
+            <span>$</span><span id="output">Добро пожаловать в консоль. Введите команду:</span>
+        </div>
+        <input type="text" id="input" autofocus placeholder="Введите команду..." />
+    </div>
+
+    <!-- Элемент для звука включения -->
+    <audio id="bootSound" src="assets/audio/boot-sound.mp3" preload="auto"></audio>
+    <!-- Музыка, которая будет запускаться при вводе команды -->
+    <audio id="maxwell" src="assets/audio/maxwell.mp3" preload="auto"></audio>
+
+    <script>
+        // Список доступных команд
+        const commands = {
+            help: "Ты серьёзно думаешь, что тебе кто-то поможет?",
+            about: "Это проект в стиле",
+            contact: "Для связи с нами используйте следующие ссылки:\nEmail: contact@example.com\nВебсайт: https://www.example.com",
+            maxwell: ":3",  // Команда для воспроизведения музыки
+            привет: "Эм...Привет?"
+        };
+
+        // Когда анимация начнется, воспроизводим звук
+        const startAnimation = document.querySelector('.start-animation');
+        const container = document.querySelector('.container');
+        const bootSound = document.getElementById('bootSound');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+
+        // Воспроизводим звук при старте страницы
+        window.onload = function() {
+            bootSound.play();
+        }
+
+        // После окончания анимации показываем основной контент
+        startAnimation.addEventListener('animationend', () => {
+            startAnimation.style.display = 'none'; // Скрываем анимацию
+            container.style.display = 'block'; // Показываем основной контент
+            bootSound.pause();  // Останавливаем звук включения
+            bootSound.currentTime = 0;  // Сбрасываем время
+        });
+
+        // Получаем элементы консоли и поля ввода
+        const inputField = document.getElementById('input');
+        const outputField = document.getElementById('output');
+        const consoleElement = document.getElementById('console');
+
+        // Обработка ввода команды
+        inputField.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const command = inputField.value.trim(); // Получаем введенную команду
+                if (command) {
+                    processCommand(command); // Обрабатываем команду
+                }
+                inputField.value = ''; // Очищаем поле ввода
+            }
+        });
+
+        // Обработка команд
+        function processCommand(command) {
+            let response = '';
+
+            // Проверка команды в списке
+            if (commands[command]) {
+                response = commands[command];
+
+                // Если команда playmusic, воспроизводим музыку
+                if (command === 'maxwell') {
+                    maxwell.play();
+                }
+            } else {
+                response = `Неизвестная команда: ${command}`;
+            }
+
+            // Отображаем команду и ее ответ в консоли
+            const newLine = document.createElement('div');
+            newLine.classList.add('line');
+            newLine.innerHTML = `<span>$</span><span>${command}</span>`;
+            consoleElement.appendChild(newLine);
+
+            // Отображаем ответ
+            const responseLine = document.createElement('div');
+            responseLine.classList.add('line');
+            responseLine.innerHTML = `<span>${response}</span>`;
+            consoleElement.appendChild(responseLine);
+
+            // Прокручиваем консоль вниз
+            consoleElement.scrollTop = consoleElement.scrollHeight;
+
+            // Возвращаем фокус на поле ввода
+            inputField.focus();
+        }
+    </script>
+
+</body>
+</html>

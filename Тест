@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Психологический тест</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f2f2f2;
+    }
+
+    .container {
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .answers button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .answers button:hover {
+      background: #45a049;
+    }
+
+    .result {
+      font-size: 22px;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div id="question" class="question">Здесь будет вопрос</div>
+    <div class="answers">
+      <button onclick="nextQuestion(0)">Вариант 1</button>
+      <button onclick="nextQuestion(1)">Вариант 2</button>
+      <button onclick="nextQuestion(2)">Вариант 3</button>
+    </div>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    // Массив вопросов
+    const questions = [
+      {
+        text: "Вопрос 1?",
+        answers: ["Ответ A", "Ответ B", "Ответ C"]
+      },
+      {
+        text: "Вопрос 2?",
+        answers: ["Ответ A", "Ответ B", "Ответ C"]
+      },
+      {
+        text: "Вопрос 3?",
+        answers: ["Ответ A", "Ответ B", "Ответ C"]
+      },
+      {
+        text: "Вопрос 4?",
+        answers: ["Ответ A", "Ответ B", "Ответ C"]
+      },
+      {
+        text: "Вопрос 5?",
+        answers: ["Ответ A", "Ответ B", "Ответ C"]
+      },
+      {
+        text: "Вопрос 6?",
+        answers: ["Ответ A", "Ответ B", "Ответ C"]
+      }
+    ];
+
+    let currentQuestion = 0;
+
+    function showQuestion() {
+      document.getElementById("question").textContent = questions[currentQuestion].text;
+      const buttons = document.querySelectorAll(".answers button");
+      questions[currentQuestion].answers.forEach((answer, i) => {
+        buttons[i].textContent = answer;
+      });
+    }
+
+    function nextQuestion(choice) {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        document.querySelector(".answers").style.display = "none";
+        document.getElementById("question").style.display = "none";
+        document.getElementById("result").style.display = "block";
+        document.getElementById("result").textContent = "Тест пройден! 🎉";
+      }
+    }
+
+    // Показываем первый вопрос
+    showQuestion();
+  </script>
+</body>
+</html>
